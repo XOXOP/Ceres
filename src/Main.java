@@ -7,36 +7,25 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class Main {
-    public static void  main(String[] args) throws IOException {
+
+
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         String phrase = sc.nextLine();            //"ввод выражения");
-        int x1;
-        int x2;
-        int resul;
-        String str1 = new String(phrase);
-        String[] strings = str1.split(" ");
+        String[] strings = phrase.split(" ");
         int U = strings[0].codePointAt(0);
 
-        if(U<67) {
+        if (U < 67) {
 
             try {
-                x1 = parseInt(strings[0], 10);
-                x2 = parseInt(strings[2], 10);
+                int x1 = parseInt(strings[0], 10);
+                int x2 = parseInt(strings[2], 10);
                 boolean A = x1 < 11 && x1 > 0;
                 boolean B = x2 < 11 && x2 > 0;
                 if (A && B) {
-                    if (phrase.contains("-")) {
-                        resul=x1 - x2;
-                    }else if(phrase.contains("+")) {
-                        resul= x1 + x2;
-                    }else if(phrase.contains("/")) {
-                        resul= x1 / x2;
-                    }else if(phrase.contains("*")) {
-                        resul= x1 * x2;
-                    }else {
-                        throw new IOException();
-                    }
-                    System.out.println(resul);
+                    int m =articl(x1, x2, phrase);
+                    System.out.println(m);
+
 
                 } else {
 
@@ -48,8 +37,7 @@ public class Main {
 
             }
 
-
-        }else if(U>66) {
+        } else if (U > 66) {
             HashMap<String, Integer> map = new HashMap<>();
             map.put("I", new Integer(1));
             map.put("II", new Integer(2));
@@ -62,64 +50,52 @@ public class Main {
             map.put("IX", new Integer(9));
             map.put("X", new Integer(10));
 
-            Integer exist = Integer.valueOf((map.containsKey(strings[0]) && map.containsKey(strings[2])) ? "1" : "0");
+            byte exist = Byte.valueOf((map.containsKey(strings[0]) && map.containsKey(strings[2])) ? "1" : "0");
 
             if (exist == 1) {
-                //int xi;
-                //int xv;
-                //int xx;
-                x1 = map.get(strings[0]);
-                x2 = map.get(strings[2]);
-                if (phrase.contains("-")) {
-                    resul=x1 - x2;
-                }else if(phrase.contains("+")) {
-                    resul= x1 + x2;
-                }else if(phrase.contains("/")) {
-                    resul= x1 / x2;
-                }else if(phrase.contains("*")) {
-                    resul= x1 * x2;
-                }else {
-                    throw new IOException();
-                }
 
-                    if(resul>0){
+                int x1 = map.get(strings[0]);
+                int x2 = map.get(strings[2]);
+                int m =articl(x1, x2, phrase);
+
+                if (m > 0) {
 
                     String rim = " ";
-                    while ( resul>= 100) {
+                    while (m >= 100) {
                         rim += "C";
-                        resul -= 100;
+                        m -= 100;
                     }
-                    while (resul >= 90) {
+                    while (m >= 90) {
                         rim += "XC";
-                        resul-= 90;
+                        m -= 90;
                     }
-                    while (resul >= 50) {
+                    while (m >= 50) {
                         rim += "L";
-                        resul -= 50;
+                        m -= 50;
                     }
-                    while (resul >= 40) {
+                    while (m >= 40) {
                         rim += "XL";
-                        resul -= 40;
+                        m -= 40;
                     }
-                    while (resul >= 10) {
+                    while (m >= 10) {
                         rim += "X";
-                        resul -= 10;
+                        m -= 10;
                     }
-                    while (resul >= 9) {
+                    while (m >= 9) {
                         rim += "IX";
-                        resul -= 9;
+                        m -= 9;
                     }
-                    while (resul >= 5) {
+                    while (m >= 5) {
                         rim += "V";
-                        resul -= 5;
+                        m -= 5;
                     }
-                    while (resul >= 4) {
+                    while (m >= 4) {
                         rim += "IV";
-                        resul -= 4;
+                        m -= 4;
                     }
-                    while (resul >= 1) {
+                    while (m >= 1) {
                         rim += "I";
-                        resul -= 1;
+                        m -= 1;
                     }
                     System.out.println(rim);
                 } else {
@@ -127,16 +103,34 @@ public class Main {
                 }
 
 
-
             } else {
                 throw new IOException();
             }
 
-        }else {
+        } else {
             throw new IOException();
         }
 
 
+    }
+
+    private static int articl(int x, int y, String str1) throws IOException {
+        int resul;
+        if (str1.contains("-")) {
+            resul = x - y;
+        }else if (str1.contains("+")) {
+            resul = x + y;
+        } else if (str1.contains("/")) {
+            resul = x / y;
+        } else if (str1.contains("*")) {
+            resul = x * y;
+        } else {
+            throw new IOException();
+        }
+        return resul;
 
     }
+
+
 }
+
